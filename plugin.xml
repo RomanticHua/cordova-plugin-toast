@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="com.king.test" version="1.0.0" xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>ToastPlugin</name>
+    <js-module name="ToastPlugin" src="www/ToastPlugin.js">
+        <clobbers target="cordova.plugins.ToastPlugin"/>
+    </js-module>
+    <platform name="android">
+        <!--    配置gradle    -->
+        <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>
+        <config-file parent="/*" target="res/xml/config.xml">
+            <!--     feature的名字，就是插件的名字       -->
+            <feature name="ToastPlugin">
+                <param name="android-package" value="com.king.test.ToastPlugin"/>
+                <!--       一开始就初始化插件，并执行插件的initialize()方法         -->
+                <param name="onload" value="true"/>
+            </feature>
+        </config-file>
+
+
+        <!--    清单文件中配置权限    -->
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+        </config-file>
+
+        <!--    在application节点下中配置Activity    -->
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                    android:name="com.king.test.SplashActivity"
+                    android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+                    android:screenOrientation="portrait"/>
+        </config-file>
+
+        <!--    复制代码    -->
+        <source-file src="src/android/ToastPlugin.java" target-dir="src/com/king/test"/>
+        <source-file src="src/android/SplashActivity.java" target-dir="src/com/king/test"/>
+        <source-file src="src/android/Utils.java" target-dir="src/com/king/test"/>
+        <!--    布局文件复制到layout文件夹下面    -->
+        <source-file src="src/android/activity_splash.xml" target-dir="src/main/res/layout"/>
+    </platform>
+</plugin>
